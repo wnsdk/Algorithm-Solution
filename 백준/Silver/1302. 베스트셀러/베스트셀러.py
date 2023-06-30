@@ -1,16 +1,12 @@
-books = {}
+import sys
+input = sys.stdin.readline
+
+d = dict()
 for _ in range(int(input())):
-    name = input()
-    if name in books:
-        books[name] += 1
+    book = input()
+    if book not in d:
+        d[book] = 1
     else:
-        books[name] = 1
+        d[book] += 1
 
-max_val = max(books.values())
-arr = []
-for k, v in books.items():
-    if v == max_val:
-        arr.append(k)
-
-arr.sort()
-print(arr[0])
+print(sorted(list(d.items()), key=lambda x: (-x[1], x[0]))[0][0])
