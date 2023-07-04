@@ -1,54 +1,52 @@
 import sys
-from collections import deque
-
 input = sys.stdin.readline
+sys.setrecursionlimit(10 ** 6)
+
 dy = [-1, 1, 0, 0]
 dx = [0, 0, 1, -1]
-ans = 0
 
 n, m = map(int, input().split())
-matrix = [list(input()) for _ in range(n)]
-dp = [[-1] * m for _ in range(n)]
+matrix = [list(map(lambda x: -1 if x == 'H' else int(x), list(input().strip()))) for _ in range(n)]
+
+# dp[y][x] : (y, x) 에서 시작하여, 동전을 움직일 수 있는 최대 횟수
+dp = [[0] * m for _ in range(n)]
+visited = [[0] * m for _ in range(n)]
 
 
-def is_coord(y, x):
+def isCoord(y, x):
     return 0 <= y < n and 0 <= x < m
 
 
-def bfs(sy, sx):
-    global ans
-    q = deque()
+def dfs(y, x):
+    # 방문한 적 있다면 -> 루프
+    if visited[y][x]:
+        print(-1)
+        exit()
 
-    q.append((sy, sx, [(sy, sx)]))
-    dp[sy][sx] = 1
+    # 방문 체크
+    visited[y][x] = True
 
-    while q:
-        y, x, path = q.popleft()
+    # 예전에 찾아놓은 dp 값이 있다면
+    if dp[y][x] > 0:
+        visited[y][x] = False
+        return dp[y][x]
 
-        for k in range(4):
-            ny = y + dy[k] * int(matrix[y][x])
-            nx = x + dx[k] * int(matrix[y][x])
-            new_path = path[:]
+    for k in range(4):
+        ny = y + dy[k] * matrix[y][x]
+        nx = x + dx[k] * matrix[y][x]
 
-            # 현재 탐색 경로에 대해서, 방문한 적 있다면
-            if (ny, nx) in new_path:
-                ans = -1
-                return
+        # 보드의 바깥으로 나가거나 구멍을 만났다면
+        if not isCoord(ny, nx) or matrix[ny][nx] == -1:
+            continue
 
-            new_path.append((ny, nx))
+        # 재귀
+        dp[y][x] = max(dp[y][x], dfs(ny, nx) + 1)
 
-            # 동전이 보드의 바깥으로 나가거나 구멍에 빠질 경우 게임 종료
-            if not is_coord(ny, nx) or matrix[ny][nx] == 'H':
-                ans = max(ans, len(path))
-                continue
+    # 방문 초기화
+    visited[y][x] = False
 
-            # (ny, nx) 좌표에 도달할 때 까지 걸린 거리(nd)가 기존에 찾아놓은 값(dp)보다 작다면 더이상 탐색할 필요 없음
-            if dp[ny][nx] >= len(new_path):
-                continue
-
-            q.append((ny, nx, new_path))
-            dp[ny][nx] = len(new_path)
+    return dp[y][x]
 
 
-bfs(0, 0)
-print(ans)
+dfs(0, 0)
+print(dp[0][0] + 1)
