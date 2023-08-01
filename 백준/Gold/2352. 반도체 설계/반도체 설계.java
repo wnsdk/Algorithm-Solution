@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -14,20 +15,25 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
         
-        // dp[n] : n번째 수를 포함하면서, 지금까지 가장 긴 증가하는 부분 수열 크기
-        int[] dp = new int[n];
-        int ans = 1;
+        System.out.println(LIS(arr));
+    }
 
-        for (int i = 0; i < n; i++) {
-            dp[i] = 1;
-            for (int j = 0; j < i; j++) {
-                if (arr[j] < arr[i]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-            ans = Math.max(ans, dp[i]);
+    private static int LIS(int[] arr) {
+
+        int[] dp = new int[arr.length];
+        int size = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            int pos = Arrays.binarySearch(dp, 0, size, arr[i]);
+            if (pos >= 0) continue;
+            
+            int insertPos = Math.abs(pos) - 1;  // 맨 뒤 또는 기존원소 대체 자리
+            dp[insertPos] = arr[i];
+            
+            // 맨 뒤에 추가한거라면
+            if (insertPos == size) size++;
         }
-
-        System.out.println(ans);
+        
+        return size;
     }
 }
