@@ -1,6 +1,6 @@
 # [unrated] 취소되지 않은 진료 예약 조회하기 - 132204 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/132204) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/132204?language=oracle) 
 
 ### 성능 요약
 
@@ -333,9 +333,9 @@ Empty
 <td>2022-04-13 12:30:00.000000</td>
 </tr>
 <tr>
-<td>42</td>
+<td>43</td>
 <td>바라</td>
-<td>PT22000001</td>
+<td>PT22000019</td>
 <td>CS</td>
 <td>니모</td>
 <td>2022-04-13 15:30:00.000000</td>
