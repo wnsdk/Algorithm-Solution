@@ -1,15 +1,7 @@
-N, R = map(int, input().split())
-ans = []
+from itertools import product
 
+n, r = map(int, input().split())
+arr = [i for i in range(1, n + 1)]
 
-def permutation2(n, r):
-    if not r:
-        print(*ans)
-    else:
-        for i in range(n):
-            ans.append(i + 1)
-            permutation2(n, r - 1)
-            ans.pop()
-
-
-permutation2(N, R)
+for ans in product(arr, repeat=r):
+    print(*ans)
