@@ -1,15 +1,7 @@
-N, R = map(int, input().split())
+from itertools import combinations_with_replacement
 
+n, r = map(int, input().split())
+arr = [i for i in range(1, n + 1)]
 
-def comb2(n, r, idx):
-    if not r:
-        print(*ans)
-    else:
-        for i in range(idx, n):
-            ans.append(i + 1)
-            comb2(n, r - 1, i)
-            ans.pop()
-
-
-ans = []
-comb2(N, R, 0)
+for ans in combinations_with_replacement(arr, r):
+    print(*ans)
