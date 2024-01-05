@@ -1,15 +1,7 @@
-a, b = map(int, input().split())
-nums = []
+from itertools import combinations
 
+n, r = map(int, input().split())
+arr = [i for i in range(1, n + 1)]
 
-def combination(n, r, idx):
-    if not r:
-        print(*nums)
-    else:
-        for i in range(idx, n):
-            nums.append(i + 1)
-            combination(n, r - 1, i + 1)
-            nums.pop()
-
-
-combination(a, b, 0)
+for ans in combinations(arr, r):
+    print(*ans)
