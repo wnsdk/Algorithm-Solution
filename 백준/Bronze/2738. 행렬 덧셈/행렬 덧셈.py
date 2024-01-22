@@ -1,14 +1,11 @@
-# N : 행 수
-# M : 열 수
-N, M = map(int, input().split())
+import sys
+input = sys.stdin.readline
 
-matrix = [[0] * M for _ in range(N)]
+n, m = map(int, input().split())
+A = [list(map(int, input().split())) for _ in range(n)]
+B = [list(map(int, input().split())) for _ in range(n)]
 
-for _ in range(2):
-    for y in range(N):
-        row = list(map(int, input().split()))
-        for x in range(M):
-            matrix[y][x] += row[x]
-
-for y in range(N):
-    print(*matrix[y])
+for y in range(n):
+    for x in range(m):
+        print(A[y][x] + B[y][x], end=' ')
+    print()
