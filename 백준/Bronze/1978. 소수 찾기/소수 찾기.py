@@ -1,8 +1,11 @@
+import math
+
+
 def is_prime(x):
     if x < 2:
         return False
-    
-    for a in range(2, x):
+
+    for a in range(2, int(math.sqrt(x)) + 1):
         if x % a == 0:
             return False
     return True
