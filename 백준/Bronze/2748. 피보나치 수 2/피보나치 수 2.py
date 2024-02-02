@@ -1,10 +1,12 @@
+def fibonacci(x):
+    if dp[x]:
+        return dp[x]
+    if x < 2:
+        return x
+    dp[x] = fibonacci(x - 1) + fibonacci(x - 2)
+    return dp[x]
+
+
 n = int(input())
-
-cache = [-1] * (n + 1)
-cache[0] = 0
-cache[1] = 1
-
-for i in range(2, n + 1):
-    cache[i] = cache[i - 1] + cache[i - 2]
-
-print(cache[n])
+dp = [0] * (n + 1)
+print(fibonacci(n))
