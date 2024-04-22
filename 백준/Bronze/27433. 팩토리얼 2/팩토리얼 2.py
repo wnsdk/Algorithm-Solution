@@ -1,9 +1,8 @@
-n = int(input())
-
-
 def factorial(x):
-    if x == 0:
+    if not x:
         return 1
     return x * factorial(x - 1)
 
+
+n = int(input())
 print(factorial(n))
