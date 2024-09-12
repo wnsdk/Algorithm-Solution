@@ -1,42 +1,47 @@
+import sys
 from collections import deque
+
+input = sys.stdin.readline
+n, m, v = map(int, input().split())
 
 
 def dfs(x):
+    chk[x] = True
     print(x, end=' ')
-    visited[x] = True
 
-    for y in range(1, n + 1):
-        if not visited[y] and adj[x][y]:
-            dfs(y)
+    for nx in adj[x]:
+        if not chk[nx]:
+            dfs(nx)
 
 
 def bfs(s):
-    visited[s] = True
-
     q = deque()
     q.append(s)
+    chk[s] = True
 
     while q:
         x = q.popleft()
-        print(x, end=' ')
+        print(x, end= ' ')
 
-        for y in range(1, n + 1):
-            if not visited[y] and adj[x][y]:
-                visited[y] = True
-                q.append(y)
+        for nx in adj[x]:
+            if not chk[nx]:
+                q.append(nx)
+                chk[nx] = True
 
 
-n, m, v = map(int, input().split())
-adj = [[False] * (n + 1) for _ in range(n + 1)]
-visited = [False] * (n + 1)
+adj = [[] for _ in range(n + 1)]
 
 for _ in range(m):
-    a, b = map(int, input().split())
-    adj[a][b] = adj[b][a] = True
+    i, j = map(int, input().split())
+    adj[i].append(j)
+    adj[j].append(i)
 
-visited = [False] * (n + 1)
+for i in range(1, n + 1):
+    adj[i].sort()
+
+chk = [False] * (n + 1)
 dfs(v)
-
 print()
-visited = [False] * (n + 1)
+
+chk = [False] * (n + 1)
 bfs(v)
