@@ -1,20 +1,17 @@
-def f(d):
-    if d == 1:
+def f(n):
+    if n == 1:
         return ['*']
 
-    nd = d // 3
-    stars = f(nd)
     ret = []
+    stars = f(n // 3)
+    for star in stars:
+        ret.append(star * 3)
+    for star in stars:
+        ret.append(star + ' ' * (n // 3) + star)
+    for star in stars:
+        ret.append(star * 3)
 
-    for star in stars:
-        ret.append(star * 3)
-    for star in stars:
-        ret.append(star + ' ' * nd + star)
-    for star in stars:
-        ret.append(star * 3)
-        
     return ret
 
 
-n = int(input())
-print('\n'.join(f(n)))
+print('\n'.join(f(int(input()))))
