@@ -1,30 +1,26 @@
 import sys
 input = sys.stdin.readline
 
-
-def f(sy, sx, d):
-    ch = arr[sy][sx]
-
-    if d == 1:
-        return ch
-
-    nd = d // 2
-
-    for y in range(sy, sy + d):
-        for x in range(sx, sx + d):
-            if ch != arr[y][x]:
-                ret = '('
-                ret += f(sy, sx, nd)
-                ret += f(sy, sx + nd, nd)
-                ret += f(sy + nd, sx, nd)
-                ret += f(sy + nd, sx + nd, nd)
-                ret += ')'
-                return ret
-
-    return ch
-
-
 n = int(input())
-arr = [input().strip() for _ in range(n)]
+board = [input().strip() for _ in range(n)]
+
+
+def f(y, x, m):
+    idx = True
+    for i in range(m):
+        for j in range(m):
+            if board[y + i][x + j] != board[y][x]:
+                idx = False
+                break
+        if not idx:
+            break
+    
+    if idx:
+        return board[y][x]
+
+    m //= 2
+
+    return '(' + f(y, x, m) + f(y, x + m, m) + f(y + m, x, m) + f(y + m, x + m, m) + ')'
+
 
 print(f(0, 0, n))
