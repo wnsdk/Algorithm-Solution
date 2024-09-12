@@ -1,14 +1,9 @@
-def f(x, n):
-    if n == 1:
-        return x
-
-    ret = f(x, n // 2)
-
-    if n % 2:
-        return ret * ret * x % c
-    else:
-        return ret * ret % c
+def f(A, B, C):
+    if B < 2:
+        return A % C
+    x = f(A, B // 2, C) % C
+    return (x * x * (A if B % 2 else 1)) % C
 
 
 a, b, c = map(int, input().split())
-print(f(a, b) % c)
+print(f(a, b, c))
