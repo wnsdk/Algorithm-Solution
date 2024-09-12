@@ -1,7 +1,15 @@
-from itertools import product
+N, M = map(int, input().split())
+ans = []
 
-n, r = map(int, input().split())
-arr = [i for i in range(1, n + 1)]
 
-for ans in product(arr, repeat=r):
-    print(*ans)
+def product(n, m):
+    if not m:
+        print(*ans)
+    else:
+        for i in range(1, n + 1):
+            ans.append(i)
+            product(n, m - 1)
+            ans.pop()
+
+
+product(N, M)
