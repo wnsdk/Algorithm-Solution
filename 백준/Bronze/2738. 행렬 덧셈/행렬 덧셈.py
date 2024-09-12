@@ -1,11 +1,11 @@
 import sys
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
-A = [list(map(int, input().split())) for _ in range(n)]
-B = [list(map(int, input().split())) for _ in range(n)]
+r, c = map(int, input().split())
+l1 = [list(map(int, input().split())) for _ in range(r)]
+l2 = [list(map(int, input().split())) for _ in range(r)]
 
-for y in range(n):
-    for x in range(m):
-        print(A[y][x] + B[y][x], end=' ')
+for y in range(r):
+    for x in range(c):
+        print(l1[y][x] + l2[y][x], end=' ')
     print()
