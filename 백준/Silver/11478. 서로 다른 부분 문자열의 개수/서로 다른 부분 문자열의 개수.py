@@ -1,10 +1,7 @@
-st = input()
-size = len(st)
+str = input()
+s = set()
+for i in range(len(str) + 1):
+    for j in range(i):
+        s.add(str[j:i])
 
-ans = set()
-
-for s in range(size):
-    for e in range(s + 1, size + 1):
-        ans.add(st[s: e])
-
-print(len(ans))
+print(len(s))
