@@ -1,5 +1,4 @@
-input()
-A = set(map(int, input().split()))
-B = set(map(int, input().split()))
-
-print(len((A | B) - (A & B)))
+size_a, size_b = map(int, input().split())
+a = set(map(int, input().split()))
+b = set(map(int, input().split()))
+print(len((a - b) | (b - a)))
