@@ -1,31 +1,31 @@
-from collections import deque
 import sys
+from collections import deque
 
 input = sys.stdin.readline
 
 n, m = map(int, input().split())
-adj = [[] for _ in range(n + 1)]
-
-# 각 vertex의 진입 차수
+adj = [set() for _ in range(n + 1)]
 in_cnt = [0] * (n + 1)
 
 for _ in range(m):
     a, b = map(int, input().split())
-    adj[a].append(b)
+    adj[a].add(b)
     in_cnt[b] += 1
 
-# 진입 차수가 0인 vertex만을 담을 q
 q = deque()
+ans = []
 
-for i, cnt in enumerate(in_cnt):
-    if i and not cnt:
+for i in range(1, n + 1):
+    if not in_cnt[i]:
         q.append(i)
 
 while q:
-    now = q.popleft()
-    print(now, end=' ')
+    s = q.popleft()
+    ans.append(s)
 
-    for nxt in adj[now]:
-        in_cnt[nxt] -= 1
-        if not in_cnt[nxt]:
-            q.append(nxt)
+    for j in adj[s]:
+        in_cnt[j] -= 1
+        if not in_cnt[j]:
+            q.append(j)
+
+print(*ans)
