@@ -1,12 +1,10 @@
-def fibonacci(x):
-    if dp[x]:
-        return dp[x]
-    if x < 2:
-        return x
-    dp[x] = fibonacci(x - 1) + fibonacci(x - 2)
-    return dp[x]
-
-
 n = int(input())
 dp = [0] * (n + 1)
-print(fibonacci(n))
+
+if n > 0:
+    dp[1] = 1
+
+for i in range(2, n + 1):
+    dp[i] = dp[i - 1] + dp[i - 2]
+
+print(dp[n])
