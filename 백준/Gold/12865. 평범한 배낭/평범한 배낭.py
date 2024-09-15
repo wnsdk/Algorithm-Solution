@@ -1,20 +1,24 @@
-N, K = map(int, input().split())
-item = [[0, 0]] + [list(map(int, input().split())) for _ in range(N)]
+import sys
+input = sys.stdin.readline
 
-# dp[i][j] : i번째 물건까지 탐색했을 때 가방의 무게가 j라면, 그때의 가치 총합
-dp = [[0 for _ in range(K + 1)] for _ in range(N + 1)]
+n, k = map(int, input().split())
+items = [list(map(int, input().split())) for _ in range(n)]
 
-# 냅색 문제 풀이
-for i in range(1, N + 1):
-    for j in range(1, K + 1):
-        # i번째 물건 탐색 중
-        w, v = item[i]
+# dp[x][y] : x번째 물건까지 담았고, 무게가 y일 경우 가치의 최댓값
+dp = [[0] * (k + 1) for _ in range(n)]
 
-        # 목표로 하는 가방의 무게(j)보다 무거운 물건은 가방에 담지 않는다
-        if j < w:
-            dp[i][j] = dp[i - 1][j]
-        # 목표로 하는 가방의 무게(j)보다 가벼운 물건이라면, 가치 비교 후 담을지 결정한다
-        else:
-            dp[i][j] = max(v + dp[i - 1][j - w], dp[i - 1][j])
+if items[0][0] <= k:
+    dp[0][items[0][0]] = items[0][1]
 
-print(dp[N][K])
+for i in range(1, n):
+    w, v = items[i]
+
+    for j in range(k + 1):
+        # i번째 물건을 안 담는다.
+        dp[i][j] = dp[i - 1][j]
+        
+        # i번째 물건을 담는다. (i번째 물건을 담았더니 무게가 j가 되어야 함)
+        if j >= w:
+            dp[i][j] = max(dp[i][j], dp[i - 1][j - w] + v)        
+
+print(max(dp[n - 1]))
