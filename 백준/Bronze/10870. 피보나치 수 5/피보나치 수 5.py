@@ -1,11 +1,14 @@
 def fibonacci(x):
-    if x < 2:
-        return x
-    if dp[x]:
-        return dp[x]
-    return fibonacci(x - 1) + fibonacci(x - 2)
+    if x == 0:
+        return 0
+    if x == 1:
+        return 1
+    if cache[x] > -1:
+        return cache[x]
+    cache[x] = fibonacci(x - 1) + fibonacci(x - 2)
+    return cache[x]
 
 
 n = int(input())
-dp = [0] * (n + 1)
+cache = [-1] * (n + 1)
 print(fibonacci(n))
