@@ -1,59 +1,65 @@
-import sys
-input = sys.stdin.readline
+ans = -1
+cnt = 0
 
 
-def merge(p, q, r):
-    global k
-    i = p
-    j = q + 1
-    t = 1
+def chk_ans(x):
+    global cnt, ans
+    cnt += 1
+    if cnt == k:
+        ans = x
 
-    while i <= q and j <= r:
+
+def merge_sort(A, l, r):
+    if l < r:
+        m = (l + r) // 2
+        merge_sort(A, l, m)     # 전반부 정렬
+        merge_sort(A, m + 1, r) # 후반부 정렬
+        merge(A, l, m, r)       # 병합
+
+
+def merge(A, l, m, r):
+    global ans, cnt
+
+    i = l
+    j = m + 1
+    t = 0
+    tmp = [0] * (r - l + 1)
+    while i <= m and j <= r:
         if A[i] <= A[j]:
+            chk_ans(A[i])
             tmp[t] = A[i]
+            t += 1
             i += 1
         else:
+            chk_ans(A[j])
             tmp[t] = A[j]
+            t += 1
             j += 1
-        t += 1
 
-    while i <= q:
+    # 왼쪽 배열이 남았다면
+    while i <= m:
+        chk_ans(A[i])
         tmp[t] = A[i]
         t += 1
         i += 1
 
+    # 오른쪽 배열이 남았다면
     while j <= r:
+        chk_ans(A[j])
         tmp[t] = A[j]
         t += 1
         j += 1
 
-    i = p
-    t = 1
-
+    i = l
+    t = 0
     while i <= r:
-        k -= 1
         A[i] = tmp[t]
-        if k == 0:
-            print(tmp[t])
-            exit(0)
-
         i += 1
         t += 1
 
 
-# 리스트 A의 p ~ r 범위를 정렬한다.
-def merge_sort(p, r):
-    if p < r:
-        q = (p + r) // 2
-        merge_sort(p, q)
-        merge_sort(q + 1, r)
-        merge(p, q, r)
-
-
 n, k = map(int, input().split())
-A = [0] + list(map(int, input().split()))   # 1-based
-tmp = [-1] * (n + 1)
-merge_sort(1, n)
+a = list(map(int, input().split()))
 
-if k > 0:
-    print(-1)
+merge_sort(a, 0, len(a) - 1)
+print(ans)
