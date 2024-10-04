@@ -7,31 +7,28 @@ sys.setrecursionlimit(10 ** 6)
 def union(x, y):
     x = find(x)
     y = find(y)
-    
+
     if x < y:
-        parent[y] = x
+        p[y] = x
     else:
-        parent[x] = y
+        p[x] = y
 
 
-# 노드 x의 루트 노드 찾기
 def find(x):
-    # 루트 노드가 아니라면, 루트 노드를 찾을 때까지 재귀 호출
-    if parent[x] != x:
-        parent[x] = find(parent[x])
-    return parent[x]
+    if x != p[x]:
+        p[x] = find(p[x])
+    return p[x]
 
 
 n, m = map(int, input().split())
-parent = [i for i in range(n + 1)]
+p = [i for i in range(n + 1)]
 
 for _ in range(m):
     cmd, a, b = map(int, input().split())
 
-    # Find
-    if cmd:
-        print('YES' if find(a) == find(b) else 'NO')
-
-    # Union
-    else:
+    # union
+    if cmd == 0:
         union(a, b)
+    # find
+    else:
+        print('yes' if find(a) == find(b) else 'no')
